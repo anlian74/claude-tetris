@@ -27,19 +27,38 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           allowed_non_write_users: "*"
           prompt: |
-            Analiza el issue #${{ github.event.issue.number }} del repositorio ${{ github.repository }}.
+            You are a GitHub issue formatter for a Tetris game project (vanilla JS/HTML/CSS, no dependencies).
 
-            1. Lee el título y el cuerpo del issue con `gh issue view ${{ github.event.issue.number }} --repo ${{ github.repository }}`.
-            2. Determina qué labels existentes son apropiados (usa `gh label list --repo ${{ github.repository }}` para ver las disponibles: bug, documentation, duplicate, enhancement, good first issue, help wanted, invalid, question, wontfix). No crees labels nuevos.
-            3. Asigna entre 1 y labels apropiadas del issue: `gh issue edit ${{ github.event.issue.number }} --repo ${{ github.repository }} --add-label "<label1>,<label2>"`.
-            4. Publica un comentario de diagnóstico con `gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body "..."` que incluya:
-               - Resumen del problema en 1-2 frases.
-               - Posible causa raíz o área del código afectada (si es identificable).
-               - Nivel de severidad/prioridad estimado.
-               - Próximos pasos sugeridos para implementar la solución.
+            An issue was just ${{ github.event.action }} with the following details:
+            - Issue number: #${{ github.event.issue.number }}
+            - Title: ${{ github.event.issue.title }}
+            - Body: ${{ github.event.issue.body }}
+            - Author: ${{ github.event.issue.user.login }}
 
-               El comentario debe estar escrito en formato Markdown válido e interpretable por GitHub (encabezados, listas, negritas, bloques de código con ``` cuando corresponda, etc.).
+            Your tasks:
+            1. **Add labels** based on the issue content. Use only these labels:
+               - `bug` — something is broken or behaving incorrectly
+               - `enhancement` — new feature or improvement request
+               - `question` — asking for help or clarification
+               - `documentation` — docs need updating
+               - `good first issue` — simple, beginner-friendly task
+               - `duplicate` — if it seems like a known/repeated problem
 
-            No hagas cambios de código ni abras PRs, solo etiqueta y comenta.
+            2. **Post a comment** on the issue that includes:
+               - A brief, friendly summary of what the issue is about (1-2 sentences)
+               - A "Formatted Report" section with:
+                 - **Type**: Bug / Feature Request / Question / Other
+                 - **Summary**: one clear sentence describing the problem or request
+                 - **Steps to reproduce** (for bugs): list them if not provided, ask the user to provide them if it's a bug
+                 - **Expected behavior** (for bugs): what should happen
+                 - **Suggested labels**: the labels you applied and why
+               - A closing note thanking the contributor
+
+            Use the `gh` CLI to apply labels and post the comment. Example commands:
+              gh issue edit ${{ github.event.issue.number }} --add-label "bug" --repo ${{ github.repository }}
+              gh issue comment ${{ github.event.issue.number }} --body "..." --repo ${{ github.repository }}
+
+            Be concise, helpful, and friendly. Do not over-engineer the response.
+            Do not make any code changes or open PRs; only leave tags and comments.
           claude_args: |
             --allowedTools "Bash(gh issue view:*),Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label list:*)"
