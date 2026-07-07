@@ -31,7 +31,7 @@ jobs:
 
             1. Lee el título y el cuerpo del issue con `gh issue view ${{ github.event.issue.number }} --repo ${{ github.repository }}`.
             2. Determina qué labels existentes son apropiados (usa `gh label list --repo ${{ github.repository }}` para ver las disponibles: bug, documentation, duplicate, enhancement, good first issue, help wanted, invalid, question, wontfix). No crees labels nuevos.
-            3. Aplica los labels elegidos con `gh issue edit ${{ github.event.issue.number }} --repo ${{ github.repository }} --add-label "<label1>,<label2>"`.
+            3. Asigan entre 1 y labels apropiadas del issue: `gh issue edit ${{ github.event.issue.number }} --repo ${{ github.repository }} --add-label "<label1>,<label2>"`.
             4. Publica un comentario de diagnóstico con `gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body "..."` que incluya:
                - Resumen del problema en 1-2 frases.
                - Posible causa raíz o área del código afectada (si es identificable).
