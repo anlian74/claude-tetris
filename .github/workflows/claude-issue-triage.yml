@@ -38,6 +38,8 @@ jobs:
                - Nivel de severidad/prioridad estimado.
                - Próximos pasos sugeridos para implementar la solución.
 
+               El comentario debe estar escrito en formato Markdown válido e interpretable por GitHub (encabezados, listas, negritas, bloques de código con ``` cuando corresponda, etc.).
+
             No hagas cambios de código ni abras PRs, solo etiqueta y comenta.
           claude_args: |
             --allowedTools "Bash(gh issue view:*),Bash(gh issue edit:*),Bash(gh issue comment:*),Bash(gh label list:*)"
