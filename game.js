@@ -40,6 +40,8 @@ const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
 const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const themeText = document.getElementById('theme-text');
 
 const THEME_KEY = 'tetris-theme';
 
@@ -51,7 +53,9 @@ function getThemeVar(name) {
 
 function applyTheme(theme) {
   document.body.dataset.theme = theme;
-  themeToggle.checked = theme === 'light';
+  themeIcon.textContent = theme === 'light' ? '☀️' : '🌙';
+  themeText.textContent = theme === 'light' ? 'Light' : 'Dark';
+  themeToggle.setAttribute('aria-pressed', theme === 'light');
   localStorage.setItem(THEME_KEY, theme);
   if (board) {
     draw();
@@ -64,8 +68,8 @@ function initTheme() {
   applyTheme(saved === 'light' ? 'light' : 'dark');
 }
 
-themeToggle.addEventListener('change', () => {
-  applyTheme(themeToggle.checked ? 'light' : 'dark');
+themeToggle.addEventListener('click', () => {
+  applyTheme(document.body.dataset.theme === 'light' ? 'dark' : 'light');
 });
 
 function createBoard() {
