@@ -206,7 +206,7 @@ kbd {
   border-radius: 4px;
 }
 
-.overlay.hidden {
+.hidden {
   display: none;
 }
 
@@ -247,4 +247,196 @@ kbd {
 
 #restart-btn:hover {
   opacity: 0.85;
+}
+
+/* ---- Records ---- */
+#start-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 6px;
+  color: var(--accent);
+}
+
+.highscores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 200px;
+}
+
+.highscore-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  color: var(--fg);
+}
+
+.highscore-list li {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.highscore-list li.empty {
+  color: var(--label);
+  font-style: italic;
+}
+
+.highscore-list li.highlight {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.stats-line {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  color: var(--control-fg);
+}
+
+.save-score {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#name-input {
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
+  border-radius: 6px;
+  color: var(--fg);
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  width: 140px;
+}
+
+#save-score-btn {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+#save-score-btn:hover {
+  opacity: 0.85;
+}
+
+.secondary-btn {
+  margin-top: 4px;
+  background: transparent;
+  color: var(--control-fg);
+  border: 1px solid var(--kbd-border);
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.secondary-btn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+#play-btn {
+  margin-top: 8px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s;
+}
+
+#play-btn:hover {
+  opacity: 0.85;
+}
+
+/* ---- Menú de pausa ---- */
+.pause-box {
+  min-width: 220px;
+}
+
+.pause-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--accent);
+}
+
+.pause-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.pause-actions button {
+  background: var(--kbd-bg);
+  color: var(--fg);
+  border: 1px solid var(--kbd-border);
+  border-radius: 6px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.pause-actions button:hover {
+  border-color: var(--accent);
+}
+
+#resume-btn {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-color: var(--accent);
+}
+
+#resume-btn:hover {
+  opacity: 0.85;
+}
+
+.pause-box .controls {
+  align-self: stretch;
+}
+
+.pause-box .controls ul {
+  align-items: center;
+}
+
+.pause-level {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--control-fg);
+}
+
+.pause-level select {
+  background: var(--kbd-bg);
+  color: var(--fg);
+  border: 1px solid var(--kbd-border);
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-family: inherit;
+  font-size: 12px;
 }
