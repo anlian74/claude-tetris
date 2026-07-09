@@ -57,13 +57,22 @@ const statsLinesEl = document.getElementById('stats-lines');
 const saveScoreBox = document.getElementById('save-score');
 const nameInput = document.getElementById('name-input');
 const saveScoreBtn = document.getElementById('save-score-btn');
+const pauseMenu = document.getElementById('pause-menu');
+const resumeBtn = document.getElementById('resume-btn');
+const pauseRestartBtn = document.getElementById('pause-restart-btn');
+const toggleControlsBtn = document.getElementById('toggle-controls-btn');
+const pauseControls = document.getElementById('pause-controls');
+const startLevelSelect = document.getElementById('start-level-select');
 
 const THEME_KEY = 'tetris-theme';
 const HIGHSCORES_KEY = 'tetris-highscores';
 const BEST_COMBO_KEY = 'tetris-best-combo';
 const MAX_LINES_KEY = 'tetris-max-lines';
+const START_LEVEL_KEY = 'tetris-start-level';
+const MIN_START_LEVEL = 1;
+const MAX_START_LEVEL = 15;
 
-let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
+let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId, startLevel;
 let highscores, bestCombo, maxLines, comboCount;
 
 function getThemeVar(name) {
@@ -170,6 +179,27 @@ saveScoreBtn.addEventListener('click', () => {
   const idx = saveHighscore(name, score);
   renderAllRecords(idx);
   saveScoreBox.classList.add('hidden');
+});
+
+function applyStartLevel(value) {
+  startLevel = Math.min(MAX_START_LEVEL, Math.max(MIN_START_LEVEL, value));
+  startLevelSelect.value = String(startLevel);
+  localStorage.setItem(START_LEVEL_KEY, String(startLevel));
+}
+
+function initStartLevel() {
+  for (let n = MIN_START_LEVEL; n <= MAX_START_LEVEL; n++) {
+    const opt = document.createElement('option');
+    opt.value = String(n);
+    opt.textContent = String(n);
+    startLevelSelect.appendChild(opt);
+  }
+  const saved = parseInt(localStorage.getItem(START_LEVEL_KEY), 10);
+  applyStartLevel(Number.isInteger(saved) ? saved : MIN_START_LEVEL);
+}
+
+startLevelSelect.addEventListener('change', () => {
+  applyStartLevel(parseInt(startLevelSelect.value, 10));
 });
 
 function createBoard() {
@@ -383,15 +413,14 @@ function togglePause() {
   if (gameOver) return;
   paused = !paused;
   if (!paused) {
+    pauseMenu.classList.add('hidden');
     lastTime = performance.now();
     loop(lastTime);
   } else {
     cancelAnimationFrame(animId);
-    overlayTitle.textContent = 'PAUSA';
-    overlayScore.textContent = '';
-    saveScoreBox.classList.add('hidden');
-    overlayRecords.classList.add('hidden');
-    overlay.classList.remove('hidden');
+    pauseControls.classList.add('hidden');
+    toggleControlsBtn.setAttribute('aria-expanded', 'false');
+    pauseMenu.classList.remove('hidden');
   }
 }
 
@@ -416,11 +445,11 @@ function init() {
   board = createBoard();
   score = 0;
   lines = 0;
-  level = 1;
+  level = startLevel;
   paused = false;
   gameOver = false;
   comboCount = 0;
-  dropInterval = 1000;
+  dropInterval = Math.max(100, 1000 - (level - 1) * 90);
   dropAccum = 0;
   lastTime = performance.now();
   next = randomPiece();
@@ -429,12 +458,13 @@ function init() {
   overlay.classList.add('hidden');
   saveScoreBox.classList.add('hidden');
   overlayRecords.classList.add('hidden');
+  pauseMenu.classList.add('hidden');
   cancelAnimationFrame(animId);
   animId = requestAnimationFrame(loop);
 }
 
 document.addEventListener('keydown', e => {
-  if (e.code === 'KeyP') { togglePause(); return; }
+  if (e.code === 'KeyP' || e.code === 'Escape') { togglePause(); return; }
   if (paused || gameOver) return;
   switch (e.code) {
     case 'ArrowLeft':
@@ -460,6 +490,14 @@ document.addEventListener('keydown', e => {
 
 restartBtn.addEventListener('click', init);
 
+resumeBtn.addEventListener('click', togglePause);
+pauseRestartBtn.addEventListener('click', init);
+toggleControlsBtn.addEventListener('click', () => {
+  const hidden = pauseControls.classList.toggle('hidden');
+  toggleControlsBtn.setAttribute('aria-expanded', String(!hidden));
+});
+
 initTheme();
 initRecords();
+initStartLevel();
 renderAllRecords();
