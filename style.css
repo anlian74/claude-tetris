@@ -241,7 +241,8 @@ kbd {
   color: var(--accent);
 }
 
-#restart-btn {
+#restart-btn,
+#start-btn {
   margin-top: 8px;
   background: var(--accent);
   color: var(--accent-fg);
@@ -255,7 +256,8 @@ kbd {
   transition: background 0.15s;
 }
 
-#restart-btn:hover {
+#restart-btn:hover,
+#start-btn:hover {
   opacity: 0.85;
 }
 
@@ -309,6 +311,24 @@ kbd {
   width: 100%;
 }
 
+.start-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 6px;
+  color: var(--accent);
+  text-align: center;
+}
+
+/* ---- Highscores ---- */
+.highscores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
 .controls-list.hidden {
   display: none;
 }
@@ -345,4 +365,103 @@ kbd {
   font-weight: 700;
   padding: 4px 8px;
   cursor: pointer;
+}
+
+.hs-list {
+  list-style: none;
+  width: 100%;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  color: var(--fg);
+}
+
+.hs-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.hs-list .hs-empty {
+  justify-content: center;
+  color: var(--label);
+}
+
+.hs-highlight {
+  color: var(--accent);
+  font-weight: 700;
+  background: var(--kbd-bg);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.hs-stats {
+  font-size: 11px;
+  color: var(--label);
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* ---- Entrada de nombre ---- */
+#name-entry {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#name-input {
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
+  color: var(--fg);
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  width: 110px;
+}
+
+#name-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+#name-entry #save-score-btn {
+  margin-top: 0;
+}
+
+#gameover-extra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+#gameover-extra.hidden {
+  display: none;
+}
+
+.secondary-btn,
+#save-score-btn {
+  margin-top: 8px;
+  background: var(--kbd-bg);
+  align-self: center;
+  color: var(--fg);
+  border: 1px solid var(--kbd-border);
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: border-color 0.15s;
+}
+
+.secondary-btn:hover,
+#save-score-btn:hover {
+  border-color: var(--accent);
 }
