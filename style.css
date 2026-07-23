@@ -147,6 +147,37 @@ body {
   line-height: 1;
 }
 
+/* ---- Selector de skin ---- */
+.skin-selector {
+  display: flex;
+}
+
+#skin-select {
+  width: 100%;
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
+  border-radius: 6px;
+  color: var(--fg);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+#skin-select:hover,
+#skin-select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+#skin-select option {
+  background: var(--board-bg);
+  color: var(--fg);
+}
+
 /* ---- Controles ---- */
 .controls ul {
   list-style: none;
